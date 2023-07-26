@@ -1,0 +1,17 @@
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 3rem;
+    align-items: center;
+    font-size: 2rem;
+
+    .nav-links-container {
+        display: flex;
+        gap: 3rem;
+
+        .shop-link {
+            text-transform: uppercase;
+        }
+    }
+
+}
