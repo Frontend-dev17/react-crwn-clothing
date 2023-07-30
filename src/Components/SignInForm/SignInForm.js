@@ -2,10 +2,11 @@ import "./SignInForm.scss";
 
 import { signInUserWithEmailAndPassword } from "../../Utils/Firebase/Firebase";
 import FormInput from "../FormInput/FormInput";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Button from "../Button/Button";
 
 import { signInWithGooglePopup, createUserDocFromStore } from "../../Utils/Firebase/Firebase"
+import { UserContext } from "../Contexts/Contexts";
 
 
 const formDefaultfields = {
@@ -15,6 +16,8 @@ const formDefaultfields = {
 
 const SignInForm = () => {
     const [formFields, setFormFields] = useState(formDefaultfields);
+
+    const { setCurrentUser } = useContext(UserContext)
 
     const { email, password } = formFields;
 
@@ -34,8 +37,8 @@ const SignInForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await signInUserWithEmailAndPassword(email, password);
-            console.log("response", response);
+            const { user } = await signInUserWithEmailAndPassword(email, password);
+            setCurrentUser(user)
             resetFields();
         }
         catch (err) {

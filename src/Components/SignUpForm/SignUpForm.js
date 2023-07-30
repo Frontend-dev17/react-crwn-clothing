@@ -1,8 +1,9 @@
 import "./SignUpForm.scss";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { signUpUserWithEmailAndPassword, createUserDocFromStore } from "../../Utils/Firebase/Firebase"
 import FormInput from './../FormInput/FormInput';
 import Button from './../Button/Button';
+import { UserContext } from "../Contexts/Contexts";
 
 
 const defaultFormFields = {
@@ -20,6 +21,8 @@ const SignUpForm = () => {
         setFormFields(defaultFormFields)
     }
 
+    const { setCurrentUser } = useContext(UserContext)
+
     const formOnSubmit = async (event) => {
         event.preventDefault();
 
@@ -30,9 +33,10 @@ const SignUpForm = () => {
 
         try {
             const { user } = await signUpUserWithEmailAndPassword(email, password)
-
+            setCurrentUser(user);
             await createUserDocFromStore(user, { displayName })
             resetFields()
+
 
         } catch (err) {
             if (err.code === "auth/email-already-exist") {

@@ -9,8 +9,9 @@
         display: flex;
         gap: 3rem;
 
-        .shop-link {
+        .nav-link {
             text-transform: uppercase;
+            cursor: pointer;
         }
     }
 
