@@ -20,7 +20,7 @@ const Navigation = () => {
                     <Crown />
                 </Link>
                 <div className="nav-links-container">
-                    <Link className="nav-link" to="/">Shop</Link>
+                    <Link className="nav-link" to="/shop">Shop</Link>
                     <Link className="nav-link" to="/">Contact</Link>
                     {currentUser ?
                         (
