@@ -4,7 +4,8 @@ import {
     onAuthStateChanged
 } from "firebase/auth"
 
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore"
+import { getFirestore, doc, getDoc, setDoc, collection, writeBatch } from "firebase/firestore"
+//collection : reference to write a brand new collection, adding docs inside of that collection
 
 const firebaseConfig = {
     apiKey: "AIzaSyCl8Ehs_yrx1BgLCmepr1fSDihdemn2A-o",
@@ -29,6 +30,23 @@ export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
 export const signInWithGoogleRedirect = () => signInWithRedirect(auth, provider);
 
 export const db = getFirestore();
+
+// adding collection to db
+// -- collectionKey is the key where the collection shows in firebase
+// -- objectsToAdd is the really docs to add to the collection
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+    // adding a reference to the collection and taking in the singleton db created already 
+    const collectionRef = collection(db, collectionKey)
+    const batch = writeBatch(db)
+
+    objectsToAdd.forEach((object) => {
+        const docRef = doc(collectionRef, object.title.toLowerCase())
+        batch.set(docRef, object)
+    })
+
+    await batch.commit()
+
+}
 
 export const createUserDocFromStore = async (userAuth, additionalInformation = {}) => {
     if (!userAuth) return;
