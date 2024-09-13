@@ -9,7 +9,7 @@ import { UserContext } from "../../Components/Contexts/Contexts";
 import { CartContexts } from "../../Components/Contexts/Cartcontexts";
 import { signOutUser } from "../../Utils/Firebase/Firebase";
 
-import './Navigation.scss';
+import { NavLink, NavLinksContainer, NavigationContainer } from "./Navigation.jsx";
 
 const Navigation = () => {
 
@@ -20,27 +20,27 @@ const Navigation = () => {
 
     return (
         <Fragment>
-            <div className="nav-container">
+            <NavigationContainer>
                 <Link to="/" className="logo-container">
                     <Crown />
                 </Link>
-                <div className="nav-links-container">
-                    <Link className="nav-link" to="/shop">Shop</Link>
-                    <Link className="nav-link" to="/">Contact</Link>
+                <NavLinksContainer>
+                    <NavLink to="/shop">Shop</NavLink>
+                    <NavLink to="/">Contact</NavLink>
                     {currentUser ?
                         (
-                            <span className="nav-link" onClick={signOutUser}>SignOut</span>
+                            <NavLink as='span' onClick={signOutUser}>SignOut</NavLink>
                         )
                         :
                         (
 
-                            <Link className="nav-link" to="/auth">Sign in</Link>
+                            <NavLink to="/auth">Sign in</NavLink>
                         )
                     }
                     <CartIcon />
-                </div>
+                </NavLinksContainer>
                 {isCartOpen && <CartDropdown />}
-            </div>
+            </NavigationContainer>
             <Outlet />
         </Fragment>
     )

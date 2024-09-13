@@ -4,7 +4,7 @@ import {
     onAuthStateChanged
 } from "firebase/auth"
 
-import { getFirestore, doc, getDoc, setDoc, collection, writeBatch } from "firebase/firestore"
+import { getFirestore, doc, getDoc, setDoc, collection, writeBatch, query, getDocs } from "firebase/firestore"
 //collection : reference to write a brand new collection, adding docs inside of that collection
 
 const firebaseConfig = {
@@ -46,6 +46,19 @@ export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => 
 
     await batch.commit()
 
+}
+
+export const getCollectionAndDocs = async () => {
+    const collectionRef = collection(db, "collection")
+    const q = query(collectionRef)
+
+    const querySnapshot = await getDocs(q)
+    const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+        const { title, items } = docSnapshot.data()
+        acc[title.toLowerCase()] = items;
+        return acc
+    }, {})
+    return categoryMap
 }
 
 export const createUserDocFromStore = async (userAuth, additionalInformation = {}) => {

@@ -3,7 +3,7 @@ import "./SignInForm.scss";
 import { signInUserWithEmailAndPassword } from "../../Utils/Firebase/Firebase";
 import FormInput from "../FormInput/FormInput";
 import { useState } from "react";
-import Button from "../Button/Button";
+import Button, { BUTTON_CLASS_TYPES } from "../Button/Button";
 
 import { signInWithGooglePopup, createUserDocFromStore } from "../../Utils/Firebase/Firebase"
 
@@ -74,7 +74,7 @@ const SignInForm = () => {
                 />
                 <div className="buttons-container">
                     <Button type="submit">Sign In</Button>
-                    <Button buttonType="google" type="button" onClick={googleSignIn}>Google SignIn</Button>
+                    <Button buttonType={BUTTON_CLASS_TYPES.google} type="button" onClick={googleSignIn}>Google SignIn</Button>
                 </div>
             </form>
         </div>
