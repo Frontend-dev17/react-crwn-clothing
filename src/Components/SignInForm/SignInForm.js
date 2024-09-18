@@ -5,7 +5,7 @@ import FormInput from "../FormInput/FormInput";
 import { useState } from "react";
 import Button, { BUTTON_CLASS_TYPES } from "../Button/Button";
 
-import { signInWithGooglePopup, createUserDocFromStore } from "../../Utils/Firebase/Firebase"
+import { signInWithGooglePopup } from "../../Utils/Firebase/Firebase"
 
 
 const formDefaultfields = {
@@ -34,7 +34,7 @@ const SignInForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const { user } = await signInUserWithEmailAndPassword(email, password);
+            await signInUserWithEmailAndPassword(email, password);
             resetFields();
         }
         catch (err) {
